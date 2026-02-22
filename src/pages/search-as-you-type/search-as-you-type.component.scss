@@ -14,10 +14,10 @@
 
   box-shadow: 18px 12px colours.$accent;
 
-  display: flex; 
+  display: flex;
   flex-direction: column;
-  flex: 1;
 
+  max-width: 900px;
   min-width: 400px;
   padding: 6px 6px 24px;
 
@@ -36,7 +36,7 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  flex: 2;
+  flex: 1;
   font-family: 'Courier New', Courier, monospace;
   font-size: 18pt;
   margin-top: 24px;
@@ -52,12 +52,11 @@
   margin-top: 12px;
   padding: 6px;
   text-align: center;
-  width: 100%;
 }
 
 .results {
   line-height: 36px;
-  
+
   li {
     background-color: colours.$base;
     border-radius: 12px;
@@ -66,6 +65,7 @@
     margin: 12px;
     min-width: 200px;
     text-align: center;
+    box-shadow: 9px 6px colours.$accent;
   }
 }
 

@@ -1,6 +1,6 @@
 <div class="description">
-  <fa-icon 
-    [icon]="ICONS.info" 
+  <fa-icon
+    [icon]="ICONS.info"
     [size]="'2x'">
   </fa-icon>
   <div class="description__text">
@@ -13,22 +13,23 @@
       <li>a custom caching layer for instant data retrieval</li>
       <li>use of Angular Signals for optimized change detection</li>
     </ul>
-  
-    The code can be found here:
+
+    The code can be found
+    <a href="https://github.com/serenasychan/serenasychan.github.io/tree/source/src/pages/search-as-you-type"
+       target="_blank" rel="noopener noreferrer">here</a>
   </div>
 </div>
 
 <div class="content">
   <label>
     Search for words starting with:
-    <br />
-    <input
-      id="searchString"
-      type="text"
-      [(ngModel)]="searchString"
-      (ngModelChange)="onInputChange($event)"
-    >
   </label>
+  <input
+    id="searchString"
+    type="text"
+    [(ngModel)]="searchString"
+    (ngModelChange)="onInputChange($event)"
+  >
 
   @if (showLoading()) {
     <div class="noResults">
@@ -38,7 +39,7 @@
   } @else if (searchString.length < MIN_SEARCH_LENGTH) {
     <div class="noResults">
       <fa-icon [icon]="ICONS.alert"></fa-icon>
-      Please enter at least {{ MIN_SEARCH_LENGTH}} characters
+      Please enter at least {{ MIN_SEARCH_LENGTH }} characters
     </div>
   } @else if (suggestions().length === 0) {
     <div class="noResults">
@@ -47,8 +48,8 @@
   } @else if (suggestions().length > 0) {
     <div class="results">
       <ol>
-        @for (suggestion of suggestions(); track suggestion.word; let i = $index) {
-          <li> 
+        @for (suggestion of suggestions(); track suggestion.word) {
+          <li>
             {{ suggestion.word }}
           </li>
         }
