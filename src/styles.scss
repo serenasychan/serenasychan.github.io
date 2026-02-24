@@ -1,5 +1,25 @@
-/* You can add global styles to this file, and also import other style files */
+@use 'app/colours';
+
+%highlight {
+  background-color: rgba(colours.$base, 0.5);
+}
+
 body {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: colours.$accent-darker;
+}
+
+code {
+  background-color: rgba(colours.$base, 0.5);
+  color: colours.$accent-dark;
+  font-weight: bold;
+}
+
+h2 {
+  color: colours.$accent-darker;
 }

@@ -1,41 +1,35 @@
-<div class="description">
-  <fa-icon
-    [icon]="ICONS.info"
-    [size]="'2x'">
-  </fa-icon>
-  <div class="description__text">
-    <p>
-      Build a search bar for suggested words. As the user types, call an API and display the results in a list.
-    </p>
+<app-card>
+  <p>
+    Build a search bar for suggested words. As the user types, call an API and display the results in a list.
+  </p>
 
-    <h3>The Requirements:</h3>
-    <ul>
-      <li>Don't call the API on every single keystroke (wait 300ms).</li>
-      <li>If request A is sent, then request B is sent, but request A finishes after B, you must ignore
-        A so the UI doesn't show "stale" data.
-      </li>
-      <li>Display a "Loading..." state and a list of results.</li>
-    </ul>
+  <h3>The Requirements:</h3>
+  <ul>
+    <li>Don't call the API on every single keystroke (wait 300ms).</li>
+    <li>If request A is sent, then request B is sent, but request A finishes after B, you must ignore
+      A so the UI doesn't show "stale" data.
+    </li>
+    <li>Display a "Loading..." state and a list of results.</li>
+  </ul>
 
-    <h3>The Solution:</h3>
+  <h3>The Solution:</h3>
 
-    This is an example of a reactive search component demonstrating advanced RxJS patterns.
+  This is an example of a reactive search component demonstrating advanced RxJS patterns.
 
-    <ul>
-      <li><code>debounce</code> allows waiting 300ms per request</li>
-      <li><code>switchMap</code> allows intelligent API request cancellation</li>
-      <li>An initial state requiring at least 3 characters before searching as well as loading, loaded, and empty
-        state.
-      </li>
-      <li>A custom caching layer for instant data retrieval.</li>
-      <li>Use of Angular Signals for optimized change detection.</li>
-    </ul>
+  <ul>
+    <li><code>debounce</code> allows waiting 300ms per request</li>
+    <li><code>switchMap</code> allows intelligent API request cancellation</li>
+    <li>An initial state requiring at least 3 characters before searching as well as loading, loaded, and empty
+      state.
+    </li>
+    <li>A custom caching layer for instant data retrieval.</li>
+    <li>Use of Angular Signals for optimized change detection.</li>
+  </ul>
 
-    The code can be found
-    <a href="https://github.com/serenasychan/serenasychan.github.io/tree/source/src/pages/search-as-you-type"
-       target="_blank" rel="noopener noreferrer">here</a>
-  </div>
-</div>
+  The code can be found
+  <a href="https://github.com/serenasychan/serenasychan.github.io/tree/source/src/pages/search-as-you-type"
+     target="_blank" rel="noopener noreferrer">here</a>
+</app-card>
 
 <div class="content">
   <label>

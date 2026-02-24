@@ -6,6 +6,7 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { FormsModule } from "@angular/forms";
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
 import { faCircleInfo, faHourglass, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+import { CardComponent } from '../../components/card/card.component';
 
 type State = 'loading' | 'empty' | 'initial' | 'loaded';
 
@@ -13,7 +14,8 @@ type State = 'loading' | 'empty' | 'initial' | 'loaded';
   selector: 'app-search-as-you-type',
   imports: [
     FormsModule,
-    FaIconComponent
+    FaIconComponent,
+    CardComponent
   ],
   templateUrl: './search-as-you-type.component.html',
   styleUrl: './search-as-you-type.component.scss',

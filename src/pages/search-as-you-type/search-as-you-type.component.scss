@@ -6,38 +6,6 @@
   flex: 1;
 }
 
-.description {
-  border: colours.$base;
-  border-radius: 15px;
-  border-style: solid;
-  border-width: 6px;
-
-  box-shadow: 18px 12px colours.$accent;
-
-  display: flex;
-  flex-direction: column;
-
-  max-width: 700px;
-  min-width: 400px;
-  padding: 6px 6px 24px;
-
-  fa-icon {
-    color: colours.$base;
-    padding-top: 6px;
-  }
-
-  &__text {
-    line-height: 24px;
-    padding: 0 20px;
-  }
-
-  code {
-    background-color: rgba(colours.$base, 0.5);
-    color: colours.$accent-dark;
-    font-weight: bold;
-  }
-}
-
 .content {
   align-items: center;
   display: flex;
