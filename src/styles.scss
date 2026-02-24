@@ -1,8 +1,9 @@
 @use 'app/colours';
 
-%highlight {
-  background-color: rgba(colours.$base, 0.5);
+a, b {
+  color: colours.$accent-darker;
 }
+
 
 body {
   margin: 0;
@@ -10,16 +11,18 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: colours.$accent-darker;
-}
 
 code {
   background-color: rgba(colours.$base, 0.5);
-  color: colours.$accent-dark;
+  color: colours.$accent-darker;
   font-weight: bold;
 }
 
-h2 {
+h1 {
+  color: colours.$accent-darker;
+  font-weight: normal;
+}
+
+h2, h3 {
   color: colours.$accent-darker;
 }
