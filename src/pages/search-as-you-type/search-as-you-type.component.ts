@@ -1,11 +1,13 @@
-import { Component, DestroyRef, signal, WritableSignal } from '@angular/core';
+import { Component, computed, DestroyRef, signal, WritableSignal } from '@angular/core';
 import { SuggestedWord } from './suggested-word';
 import { catchError, debounceTime, distinctUntilChanged, filter, map, of, Subject, switchMap, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { FormsModule } from "@angular/forms";
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
-import { faHourglass, faCircleInfo, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+import { faCircleInfo, faHourglass, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+
+type State = 'loading' | 'empty' | 'initial' | 'loaded';
 
 @Component({
   selector: 'app-search-as-you-type',
@@ -24,16 +26,27 @@ export class SearchAsYouType {
   }
   MIN_SEARCH_LENGTH = 3;
 
-  showLoading = signal(false);
-
-  searchString = '';
-  private searchSubject = new Subject<string>();
+  searchString = signal('');
+  private showLoading = signal(false);
+  state = computed<State>(() => {
+    if (this.showLoading()) {
+      return 'loading';
+    }
+    if (this.searchString().length < this.MIN_SEARCH_LENGTH) {
+      return 'initial';
+    }
+    if (this.suggestions().length === 0) {
+      return 'empty'
+    }
+    return 'loaded';
+  })
 
   suggestions: WritableSignal<SuggestedWord[]> = signal([]);
 
   private cache = new Map<string, SuggestedWord[]>();
+  private searchSubject = new Subject<string>();
 
-  constructor(private http: HttpClient, private destroyRef: DestroyRef) {
+  constructor(private http: HttpClient, destroyRef: DestroyRef) {
     this.searchSubject.asObservable().pipe(
       debounceTime(300),
       distinctUntilChanged(),
@@ -46,8 +59,8 @@ export class SearchAsYouType {
         } else {
           return this.http.get<SuggestedWord[]>(`https://api.datamuse.com/sug?s=${searchString}`)
             .pipe(
-              tap((suggestion) => {
-                this.cache.set(searchString, suggestion)
+              tap((suggestions) => {
+                this.cache.set(searchString, suggestions)
               }),
               catchError(() => of([])))
         }

@@ -31,29 +31,34 @@
     (ngModelChange)="onInputChange($event)"
   >
 
-  @if (showLoading()) {
-    <div class="noResults">
-      <fa-icon [icon]="ICONS.hourglass"></fa-icon>
-      Loading ...
-    </div>
-  } @else if (searchString.length < MIN_SEARCH_LENGTH) {
-    <div class="noResults">
-      <fa-icon [icon]="ICONS.alert"></fa-icon>
-      Please enter at least {{ MIN_SEARCH_LENGTH }} characters
-    </div>
-  } @else if (suggestions().length === 0) {
-    <div class="noResults">
-      No matches found.
-    </div>
-  } @else if (suggestions().length > 0) {
-    <div class="results">
-      <ol>
-        @for (suggestion of suggestions(); track suggestion.word) {
-          <li>
-            {{ suggestion.word }}
-          </li>
-        }
-      </ol>
-    </div>
+  @switch (state()) {
+    @case ('loading') {
+      <div class="noResults">
+        <fa-icon [icon]="ICONS.hourglass"></fa-icon>
+        Loading ...
+      </div>
+    }
+    @case ('initial') {
+      <div class="noResults">
+        <fa-icon [icon]="ICONS.alert"></fa-icon>
+        Please enter at least {{ MIN_SEARCH_LENGTH }} characters
+      </div>
+    }
+    @case ('empty') {
+      <div class="noResults">
+        No matches found.
+      </div>
+    }
+    @case ('loaded') {
+      <div class="results">
+        <ol>
+          @for (suggestion of suggestions(); track suggestion.word) {
+            <li>
+              {{ suggestion.word }}
+            </li>
+          }
+        </ol>
+      </div>
+    }
   }
 </div>
