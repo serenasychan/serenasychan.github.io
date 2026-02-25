@@ -1,0 +1,43 @@
+/* --- Primitives (The "Palette") --- */
+
+$brand-orange: #FF9A56;
+$brand-orange-burnt: #D52D00;
+
+$brand-pink: #D362A4;
+$brand-magenta: #A30262;
+$brand-plum: #770149;
+$white: #FFFFFF;
+
+/* --- Colours --- */
+
+$ui-primary-50: rgba($brand-orange, 0.5);
+$ui-primary-75: rgba($brand-orange, 0.75);
+$ui-primary: $brand-orange;
+
+$ui-primary-dark-75: rgba($brand-orange-burnt, 0.75);
+$ui-primary-dark: $brand-orange-burnt;
+
+$ui-accent: $brand-pink;
+
+$ui-accent-dark-75: rgba($brand-magenta, 0.75);
+$ui-accent-dark: $brand-magenta;
+
+
+$ui-dark-grey: rgba(0, 0, 0, 0.75);
+
+/* --- Radius --- */
+$radius-s: 4px;
+$radius-m: 8px;
+$radius-l: 12px;
+$radius-xl: 24px;
+
+
+/* --- Spacing --- */
+
+$space-xs: 0.25rem; // 4px
+$space-s: 0.5rem; // 8px
+$space-m: 1rem; // 16px
+$space-l: 1.5rem; // 24px
+$space-xl: 2rem; // 32px
+$space-xxl: 3rem; // 48px
+

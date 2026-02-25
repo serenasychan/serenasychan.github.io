@@ -1,0 +1,147 @@
+<article class="case-study">
+
+  <header class="case-study-header">
+    <h1>The Hidden Complexity of “Select All” <br/> in a Server-Side Grid</h1>
+    <p class="case-study-subtitle">
+      A small UX feature that surfaced architectural coupling across filtering, selection, and view state.
+    </p>
+  </header>
+
+  <section>
+    <h2>Context</h2>
+    <p>
+      I engineered a high-extensible server-side grid system built using AG Grid.
+      Over the project lifecycle, I oversaw its expansion into a core library used to spin up 10 unique child
+      components,
+      successfully integrating complex feature sets and managing the transition from a simple utility to a
+      comprehensive, 1,000+ lines of code.
+    </p>
+    <p>Features included:</p>
+    <ul>
+      <li>hierarchy filtering from a context panel</li>
+      <li>name/code search from the toolbar</li>
+      <li>tag-based filtering</li>
+      <li>column-level filters</li>
+      <li>single vs multi-row selection modes</li>
+      <li>pre-selected and disabled rows</li>
+      <li>Excel export</li>
+      <li>a “show selected” view that bypassed filtering</li>
+    </ul>
+
+    <app-card [icon]="ICONS.task" [title]="'Task'">
+      Add a header-level <strong>Select All</strong> checkbox for multi-select grids.
+    </app-card>
+  </section>
+
+  <section>
+    <h2>Where Complexity Emerged</h2>
+    <p>
+      Initial implementations caused regressions across existing features, discovered primarily through manual QA.
+      Fixing one interaction often broke another due to tight coupling between filtering, selection, view mode,
+      and grid configuration.
+    </p>
+
+    <p>
+      This revealed that selection behavior was implicitly embedded across multiple parts of the grid rather than
+      modeled explicitly.
+    </p>
+  </section>
+
+  <section class="highlight-card">
+    <app-card [icon]="ICONS.roadBarrier" [title]="'Why This Was Hard'">
+      <p>
+        AG Grid’s selection model behaved inconsistently:
+      </p>
+      <ul>
+        <li>selecting individual rows populated <code>toggledNodes</code> with selected rows
+          <pre aria-label="Code snippet">
+&#123;
+  selectAll: false,
+  toggledNodes: [ /** all selected nodes **/ ],
+&#125;</pre>
+        </li>
+        <li>selecting all changed the <code>toggledNodes</code> property to represent deselected rows.
+          <pre aria-label="Code snippet">&#123;
+  selectAll: true,
+  toggledNodes: [ /** all deselected nodes **/ ]
+&#125;</pre>
+        </li>
+      </ul>
+
+      <p>
+        This made it difficult to reason about true selection state across paginated datasets where the client only
+        owned a partial view of the data.
+      </p>
+    </app-card>
+  </section>
+
+  <section>
+    <h2>Technical Approach</h2>
+
+    <p>
+      I introduced an internal selection state independent of the grid. When users selected all rows, I retrieved the
+      full result ID set from the backend so that downstream actions such as <em>show selected</em> or bulk deletion
+      could operate deterministically.
+    </p>
+
+    <p>
+      As regressions accumulated, the grid class became increasingly difficult to reason about due to mixed
+      single-select and multi-select logic.
+    </p>
+
+    <p>
+      While debugging regressions, I initially attempted to resolve issues incrementally, including using AI-assisted
+      suggestions to patch failing interactions. These fixes often introduced new edge cases, reinforcing that the
+      problem
+      was architectural rather than behavioral.
+    </p>
+
+    <p>
+      When I shifted toward asking architectural questions, specifically whether selection state distributed across the
+      component was the root cause, the need for clearer separation became obvious. This led to refactoring selection
+      logic into strategy-based implementations and introducing explicit selection state.
+    </p>
+
+    <p>
+      I refactored selection behavior into strategy-based implementations, reducing conditional complexity and
+      allowing selection modes to evolve independently.
+    </p>
+
+    <p>
+      I also expanded unit and E2E coverage to stabilize behavior as fixes were introduced.
+    </p>
+  </section>
+
+  <section>
+    <h2>Outcome</h2>
+    <ul>
+      <li>reliable cross-page selection behavior</li>
+      <li>predictable backend bulk operations</li>
+      <li>improved reasoning around selection transitions</li>
+      <li>greater confidence through expanded test coverage</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>In Retrospect</h2>
+    <ul>
+      <li>selection should have been modeled as a first-class domain concept</li>
+      <li>the “show selected” view could have been separated from filtering earlier</li>
+      <li>strategy patterns could have been applied more broadly to reduce grid responsibility</li>
+      <li>unit-testable domain logic would have reduced reliance on fragile E2E flows</li>
+    </ul>
+  </section>
+
+  <section class="insight-card">
+    <app-card
+      [icon]="ICONS.lightbulb"
+      [title]="'Key Insight'">
+      <p>
+        Selection across partially loaded datasets is a domain problem disguised as a UI feature. Treating the grid as
+        the source of truth introduced coupling and regressions, while explicit selection state enabled predictable
+        behavior and clearer reasoning.
+      </p>
+    </app-card>
+  </section>
+
+</article>

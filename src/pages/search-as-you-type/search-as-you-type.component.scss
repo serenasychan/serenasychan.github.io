@@ -1,9 +1,14 @@
-@use "../../app/colours";
+@use '../../tokens' as t;
 
 :host {
   display: flex;
   flex-direction: row;
   flex: 1;
+  margin: 0 t.$space-xl;
+}
+
+app-card {
+  max-width: 700px;
 }
 
 .content {
@@ -13,33 +18,33 @@
   flex: 1;
   font-family: 'Courier New', Courier, monospace;
   font-size: 18pt;
-  margin-top: 24px;
+  margin-top: t.$space-l;
   max-width: 1000px;
 }
 
 #searchString {
-  border: 2px solid colours.$accent-dark;
-  border-radius: 12px;
-  color: colours.$accent-darker;
+  border: 2px solid t.$ui-accent-dark-75;
+  border-radius: t.$radius-l;
+  color: t.$ui-accent-dark;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 24px;
-  margin-top: 12px;
-  padding: 6px;
+  font-size: 18pt;
+  margin-top: t.$space-m;
+  padding: t.$space-s;
   text-align: center;
 }
 
 .results {
-  line-height: 36px;
+  line-height: 27pt;
 
   li {
-    background-color: colours.$base;
-    border-radius: 12px;
+    background-color: t.$ui-primary;
+    border-radius: t.$radius-l;
     justify-content: center;
     padding: 6px;
-    margin: 12px;
+    margin: t.$space-m;
     min-width: 200px;
     text-align: center;
-    box-shadow: 9px 6px colours.$accent;
+    box-shadow: 9px 6px t.$ui-accent;
   }
 }
 
@@ -54,8 +59,8 @@
 
   fa-icon {
     font-size: 75px;
-    color: colours.$base-light;
-    margin-bottom: 24px;
+    color: t.$ui-primary-75;
+    margin-bottom: t.$space-l;
   }
 }
 

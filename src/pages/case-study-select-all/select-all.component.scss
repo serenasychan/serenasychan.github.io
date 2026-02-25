@@ -1,0 +1,25 @@
+@use '../../tokens' as t;
+
+.case-study {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.case-study-header {
+  margin-bottom: 2rem;
+  text-align: center;
+
+  h1 {
+    margin-top: 0;
+    margin-bottom: t.$space-m;
+  }
+}
+
+.case-study-subtitle {
+  opacity: 0.75;
+}
+
+.case-study section {
+  margin-top: 2.5rem;
+  line-height: 1.7;
+}

@@ -1,38 +1,37 @@
-@use "colours";
-@use "spacing";
+@use '../tokens' as t;
 
 .header, .subheader {
   align-items: baseline;
   display: flex;
   flex-direction: row;
-  padding: 0 spacing.$l;
+  padding: 0 t.$space-l;
 
   h1 {
-    color: colours.$accent;
+    color: t.$ui-accent;
     font-size: 36pt;
     font-weight: 300;
-    margin: spacing.$xl 0 0;
+    margin: t.$space-xl 0 0;
   }
 }
 
 
 hr {
   border: none;
-  border-top: spacing.$xs solid colours.$accent-darker;
-  margin: spacing.$m 0 0;
+  border-top: t.$space-xs solid t.$ui-accent-dark-75;
+  margin: t.$space-s 0 0;
 }
 
 .icons {
   margin-left: auto;
 
   fa-icon {
-    color: colours.$accent-darker;
+    color: t.$ui-accent-dark;
     font-size: 36px;
-    padding-left: spacing.$xs;
+    padding-left: t.$space-xs;
   }
 
   :hover {
-    color: colours.$base;
+    color: t.$ui-primary;
   }
 }
 
@@ -45,10 +44,11 @@ main {
 }
 
 .page {
+  background-color: rgba(t.$ui-accent, 0.05);
   display: flex;
   flex-direction: column;
   flex: 1;
   overflow-y: auto;
   height: 100%;
-  padding: spacing.$xl 0;
+  padding: t.$space-xl 0;
 }

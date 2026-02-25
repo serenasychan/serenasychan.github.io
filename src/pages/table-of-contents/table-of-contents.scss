@@ -1,0 +1,9 @@
+@use '../../tokens' as t;
+
+:host {
+  margin: 0 t.$space-l;
+}
+
+a:hover {
+  background-color: t.$ui-primary-50;
+}

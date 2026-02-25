@@ -8,18 +8,19 @@ import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
     FaIconComponent
   ],
   template: `
-    <div class="card">
+    <span class="title">
       <fa-icon
-        [icon]="icon()"
-        [size]="'2x'">
-      </fa-icon>
-      <div class="card__text">
-        <ng-content></ng-content>
-      </div>
+        [icon]="icon()">
+        </fa-icon>
+      {{ title() }}
+    </span>
+    <div class="text">
+      <ng-content></ng-content>
     </div>
   `,
   styleUrl: './card.component.scss',
 })
 export class CardComponent {
   icon = input(faCircleInfo)
+  title = input('');
 }

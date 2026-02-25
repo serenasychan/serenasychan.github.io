@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-table-of-contents',
   imports: [],
   templateUrl: './table-of-contents.html',
-  styleUrl: './table-of-contents.css',
+  styleUrl: './table-of-contents.scss',
 })
 export class TableOfContents {
 

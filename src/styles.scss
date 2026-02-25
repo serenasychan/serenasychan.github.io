@@ -1,28 +1,48 @@
-@use 'app/colours';
+@use 'tokens' as t;
 
-a, b {
-  color: colours.$accent-darker;
+a, b, strong, em {
+  color: t.$ui-accent-dark;
 }
 
-
 body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   margin: 0;
   padding: 0;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+pre {
+  background-color: t.$brand-plum;
+  border: 1px solid t.$ui-accent-dark;
+  border-radius: t.$radius-m;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: t.$white;
+  margin: t.$space-l auto;
+  padding: t.$space-l;
+  max-width: 400px;
 }
 
 
 code {
-  background-color: rgba(colours.$base, 0.5);
-  color: colours.$accent-darker;
-  font-weight: bold;
+  font-family: 'Fira Code', 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  tab-size: 2;
+}
+
+p code, li code {
+  background-color: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: t.$radius-s;
+  color: #c0392b;
+  font-size: 0.85em;
+  padding: 0.2rem 0.4rem;
 }
 
 h1 {
-  color: colours.$accent-darker;
+  color: t.$ui-accent-dark-75;
   font-weight: normal;
 }
 
 h2, h3 {
-  color: colours.$accent-darker;
+  color: t.$ui-accent-dark;
 }
