@@ -4,6 +4,8 @@
     <h1>The Hidden Complexity of “Select All” <br/> in a Server-Side Grid</h1>
     <p class="case-study-subtitle">
       A small UX feature that surfaced architectural coupling across filtering, selection, and view state.
+      <br/>
+      <em>Updated: February 26, 2026</em>
     </p>
   </header>
 
@@ -20,12 +22,11 @@
     <ul>
       <li>hierarchy filtering from a context panel</li>
       <li>name/code search from the toolbar</li>
-      <li>tag-based filtering</li>
       <li>column-level filters</li>
       <li>single vs multi-row selection modes</li>
       <li>pre-selected and disabled rows</li>
       <li>Excel export</li>
-      <li>a “show selected” view that bypassed filtering</li>
+      <li>a “show selected” view (with a selection count) that bypassed filtering</li>
     </ul>
 
     <app-card [icon]="ICONS.task" [title]="'Task'">
@@ -57,14 +58,19 @@
           <pre aria-label="Code snippet">
 &#123;
   selectAll: false,
-  toggledNodes: [ /** all selected nodes **/ ],
-&#125;</pre>
+  toggledNodes: [
+   /** all selected nodes **/
+  ],
+&#125;;</pre>
         </li>
         <li>selecting all changed the <code>toggledNodes</code> property to represent deselected rows.
-          <pre aria-label="Code snippet">&#123;
+          <pre aria-label="Code snippet">
+&#123;
   selectAll: true,
-  toggledNodes: [ /** all deselected nodes **/ ]
-&#125;</pre>
+  toggledNodes: [
+    /** all deselected nodes **/
+  ],
+&#125;;</pre>
         </li>
       </ul>
 
@@ -78,10 +84,49 @@
   <section>
     <h2>Technical Approach</h2>
 
+    <h3>1. Mapping the State Machine</h3>
+    <p>I identified several high-stakes edge cases that a standard UI toggle wouldn't handle:</p>
+    <ul>
+      <li><b>Manual Select All:</b>
+        If a user individually selects every row in the grid, the "Select All" header must show a checked state.
+      </li>
+      <li><b>Manual Deselect All:</b>
+        If a user individually deselects every row in the grid, the "Select All" header must show an empty state.
+      </li>
+      <li><b>Select All Minus One:</b>
+        When checks the "Select All" header but then deselects at least one row, the header must show an indeterminate
+        state.
+      </li>
+      <li><b>Cross-Page Memory:</b>
+        Selection state should persist across page navigations, even as AG grid destroyed and recreated DOM nodes for
+        each new dataset.
+      </li>
+      <li><b>Filter Interactions:</b>
+        We defined "Select All" applies to only the <em>filtered</em> subset visible to the user at that moment.
+      </li>
+      <li><b>Loading States:</b>
+        The user is prevented from selection actions while the grid is in a "loading" state to avoid race conditions.
+      </li>
+      <li><b>Selection Count:</b>
+        The number of selected rows is shown even when the selected rows are not visible in the grid (either on
+        another page or filtered out).
+      </li>
+    </ul>
+
+    <h3>2. Implementing Strategy-Based Logic</h3>
+
     <p>
       I introduced an internal selection state independent of the grid. When users selected all rows, I retrieved the
-      full result ID set from the backend so that downstream actions such as <em>show selected</em> or bulk deletion
-      could operate deterministically.
+      full result ID set from the backend so that downstream actions could operate deterministically.
+    </p>
+
+    <p>
+      I refactored selection behavior into strategy-based implementations, moving away from <code>if/else</code> chains
+      inside the component and refactored the logic into separate classes for multiselect and single select.
+    </p>
+
+    <p>
+      I also expanded unit and E2E coverage to stabilize behavior as fixes were introduced.
     </p>
 
     <p>
@@ -92,23 +137,13 @@
     <p>
       While debugging regressions, I initially attempted to resolve issues incrementally, including using AI-assisted
       suggestions to patch failing interactions. These fixes often introduced new edge cases, reinforcing that the
-      problem
-      was architectural rather than behavioral.
+      problem was architectural rather than behavioral.
     </p>
 
     <p>
       When I shifted toward asking architectural questions, specifically whether selection state distributed across the
       component was the root cause, the need for clearer separation became obvious. This led to refactoring selection
       logic into strategy-based implementations and introducing explicit selection state.
-    </p>
-
-    <p>
-      I refactored selection behavior into strategy-based implementations, reducing conditional complexity and
-      allowing selection modes to evolve independently.
-    </p>
-
-    <p>
-      I also expanded unit and E2E coverage to stabilize behavior as fixes were introduced.
     </p>
   </section>
 
