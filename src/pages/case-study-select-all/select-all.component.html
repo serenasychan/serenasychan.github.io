@@ -116,20 +116,6 @@
     <h3>2. Implementing Strategy-Based Logic</h3>
 
     <p>
-      I introduced an internal selection state independent of the grid. When users selected all rows, I retrieved the
-      full result ID set from the backend so that downstream actions could operate deterministically.
-    </p>
-
-    <p>
-      I refactored selection behavior into strategy-based implementations, moving away from <code>if/else</code> chains
-      inside the component and refactored the logic into separate classes for multiselect and single select.
-    </p>
-
-    <p>
-      I also expanded unit and E2E coverage to stabilize behavior as fixes were introduced.
-    </p>
-
-    <p>
       As regressions accumulated, the grid class became increasingly difficult to reason about due to mixed
       single-select and multi-select logic.
     </p>
@@ -144,6 +130,20 @@
       When I shifted toward asking architectural questions, specifically whether selection state distributed across the
       component was the root cause, the need for clearer separation became obvious. This led to refactoring selection
       logic into strategy-based implementations and introducing explicit selection state.
+    </p>
+    
+    <p>
+      I introduced an internal selection state independent of the grid. When users selected all rows, I retrieved the
+      full result ID set from the backend so that downstream actions could operate deterministically.
+    </p>
+
+    <p>
+      I refactored selection behavior into strategy-based implementations, moving away from <code>if/else</code> chains
+      inside the component and into separate classes for multiselect and single select.
+    </p>
+
+    <p>
+      I also expanded unit and E2E coverage to stabilize behavior as fixes were introduced.
     </p>
   </section>
 
