@@ -20,7 +20,7 @@ type State = 'loading' | 'empty' | 'initial' | 'loaded';
   templateUrl: './search-as-you-type.component.html',
   styleUrl: './search-as-you-type.component.scss',
 })
-export class SearchAsYouType {
+export class SearchAsYouTypeComponent {
   ICONS = {
     alert: faTriangleExclamation,
     hourglass: faHourglass,

@@ -1,0 +1,113 @@
+<article class="case-study">
+  <header class="case-study-header">
+    <h1>The SQL Hidden Cost of Undirected Relationships</h1>
+    <p class="case-study-subtitle">
+      How a missing database constraint led to NHibernate workarounds <br/> and a performance bottleneck at 1,000,000+
+      records.
+      <br/>
+      <em>Updated February: 27, 2026</em>
+    </p>
+  </header>
+
+  <section>
+    <h2>Context</h2>
+    <p>
+      In our Risk Management system, the <strong>Risk Entity</strong> served as a central hub with one-to-many
+      associations to Risks, Investments, and Assets.
+    </p>
+    <p>To keep the grid responsive, we implemented "Count Columns":</p>
+    <ul>
+      <li>Columns displayed the number of associations.</li>
+      <li>Clicking a count opened a dialog with the related entities as links.</li>
+    </ul>
+
+    <app-card [icon]="ICONS.task" [title]="'Task'">
+      Query the risk-to-risk associations efficiently to populate these count columns across datasets exceeding one
+      million records.
+    </app-card>
+  </section>
+
+  <section class="highlight-card">
+    <app-card [icon]="ICONS.roadBarrier" [title]="'Why This Was Hard'">
+      <p>
+        The table was physically directed (A -> B), but the association was conceptually undirected (A <-> B).
+      </p>
+      <ul>
+        <li>
+          <strong>The Constraint Problem:</strong> Without enforcing a "canonical direction," the database couldn't
+          distinguish between (Risk A, Risk B) and (Risk B, Risk A).
+        </li>
+        <li>
+          <strong>ORM Limitations:</strong> We used NHibernate, which does not support <code>OR</code> conditions within
+          <code>JOIN</code> predicates—the exact logic needed to check both columns for a Risk ID.
+        </li>
+      </ul>
+    </app-card>
+  </section>
+
+  <section>
+    <h2>Technical Approach</h2>
+
+    <h3>1. The "Ugly" Workaround</h3>
+    <p>
+      I pair-programmed with a Senior Backend Engineer to find a way around NHibernate's limitations. We moved the
+      <code>OR</code> query out of the join and into a <code>WITH</code> clause (Common Table Expression) to create a
+      derived set.
+    </p>
+
+    <h3>2. Performance Degradation</h3>
+    <p>
+      While the CTE worked, the <code>OR</code> conditions destroyed index efficiency in Oracle. At a million records,
+      the query slowed significantly because the optimizer could not use simple equality predicates.
+    </p>
+
+    <app-card [title]="'Current State vs. Optimized State'">
+      <p><b>Current</b>: Undirected (A ↔ B) is slow (Full Table/Index Scan)</p>
+      <pre>
+-- Requires OR / CTE
+-- Cannot use indexes effectively
+SELECT count(*)
+FROM Risk_Associations
+WHERE Risk_A_ID = 50
+   OR Risk_B_ID = 50;
+    </pre>
+
+      <p><b>Retrospect</b>: Canonical (A < B) is fast (Index Range Scan)</p>
+      <pre>
+-- Simple Equality
+-- Perfect B-Tree Index match
+SELECT count(*)
+FROM Risk_Associations
+WHERE Risk_A_ID = 50;
+    </pre>
+      <div class="status-badge good">Fast (Index Range Scan)</div>
+    </app-card>
+  </section>
+
+  <section>
+    <h2>In Retrospect</h2>
+    <p>
+      With the benefit of perspective, I realized the issue wasn't just NHibernate—it was the <strong>data
+      model</strong>.
+    </p>
+    <ul>
+      <li><strong>Canonical Ordering:</strong> We should have enforced a rule where the lower Risk ID is always stored
+        in the first column and the higher ID in the second.
+      </li>
+      <li><strong>The Result:</strong> This would have enabled a simple equality join, allowing Oracle to hit indexes
+        perfectly and scaling far beyond a million records.
+      </li>
+    </ul>
+  </section>
+
+  <section class="insight-card">
+    <app-card [icon]="ICONS.lightbulb" [title]="'Key Insight'">
+      <p>
+        <strong>Perspective brings clarity.</strong> The "Ugly" solution was a necessary patch for the moment, but the
+        true fix was an architectural rule: enforce canonical direction to turn an <code>OR</code> performance drain
+        into a simple, indexable <code>EQUALS</code>.
+      </p>
+    </app-card>
+  </section>
+
+</article>

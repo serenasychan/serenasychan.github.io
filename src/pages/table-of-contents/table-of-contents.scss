@@ -1,6 +1,7 @@
 @use '../../tokens' as t;
 
 :host {
+  line-height: 2;
   margin: 0 t.$space-l;
 }
 

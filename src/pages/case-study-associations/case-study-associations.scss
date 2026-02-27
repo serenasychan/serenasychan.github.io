@@ -1,0 +1,32 @@
+@use '../../tokens' as t;
+
+.label {
+  font-weight: bold;
+  text-transform: uppercase;
+
+  &.error {
+    color: t.$brand-orange;
+  }
+
+  &.success {
+    color: #4CAF50;
+  }
+
+  // A clean green for success
+}
+
+.status-badge {
+  padding: 4px 8px;
+  border-radius: t.$radius-s;
+  display: inline-block;
+
+  &.bad {
+    background: t.$brand-orange-burnt;
+    color: white;
+  }
+
+  &.good {
+    background: #4CAF50;
+    color: white;
+  }
+}

@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestScheduler } from 'rxjs/testing';
-import { SearchAsYouType } from './search-as-you-type.component';
+import { SearchAsYouTypeComponent } from './search-as-you-type.component';
 
 describe('SearchAsYouType', () => {
-  let component: SearchAsYouType;
-  let fixture: ComponentFixture<SearchAsYouType>;
+  let component: SearchAsYouTypeComponent;
+  let fixture: ComponentFixture<SearchAsYouTypeComponent>;
   let httpMock: HttpTestingController;
   let testScheduler = new TestScheduler((actual, expected) => {
     expect(actual).toEqual(expected);
@@ -15,12 +15,12 @@ describe('SearchAsYouType', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SearchAsYouType],
-      providers: [SearchAsYouType, provideHttpClientTesting()]
+      imports: [SearchAsYouTypeComponent],
+      providers: [SearchAsYouTypeComponent, provideHttpClientTesting()]
     }).compileComponents();
     jasmine.clock().install();
 
-    fixture = TestBed.createComponent(SearchAsYouType);
+    fixture = TestBed.createComponent(SearchAsYouTypeComponent);
     component = fixture.componentInstance;
     httpMock = TestBed.inject(HttpTestingController);
 
