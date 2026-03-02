@@ -5,7 +5,7 @@
       How a missing database constraint led to NHibernate workarounds <br/> and a performance bottleneck at 1,000,000+
       records.
       <br/>
-      <em>Updated February: 27, 2026</em>
+      <em>Updated March 2, 2026</em>
     </p>
   </header>
 
@@ -61,8 +61,7 @@
       the query slowed significantly because the optimizer could not use simple equality predicates.
     </p>
 
-    <app-card [title]="'Current State vs. Optimized State'">
-      <p><b>Current</b>: Undirected (A ↔ B) is slow (Full Table/Index Scan)</p>
+    <app-card [title]="'Current State: Undirected (A ↔ B)'">
       <pre>
 -- Requires OR / CTE
 -- Cannot use indexes effectively
@@ -71,42 +70,69 @@ FROM Risk_Associations
 WHERE Risk_A_ID = 50
    OR Risk_B_ID = 50;
     </pre>
-
-      <p><b>Retrospect</b>: Canonical (A < B) is fast (Index Range Scan)</p>
-      <pre>
--- Simple Equality
--- Perfect B-Tree Index match
-SELECT count(*)
-FROM Risk_Associations
-WHERE Risk_A_ID = 50;
-    </pre>
-      <div class="status-badge good">Fast (Index Range Scan)</div>
+      <div class="status-badge bad">Slow (Full Table/Index Scan)</div>
     </app-card>
   </section>
 
   <section>
     <h2>In Retrospect</h2>
     <p>
-      With the benefit of perspective, I realized the issue wasn't just NHibernate—it was the <strong>data
-      model</strong>.
+      With the benefit of perspective, I realized the issue wasn't just NHibernate, it was the <strong>data
+      model</strong>. We should have enforced a rule where the lower Risk ID is always stored in the first column and
+      the
+      higher in the second.
     </p>
+
+    <h3>The "Why"</h3>
     <ul>
-      <li><strong>Canonical Ordering:</strong> We should have enforced a rule where the lower Risk ID is always stored
-        in the first column and the higher ID in the second.
+      <li><strong>Without Ordering (The <code>OR</code> Problem):</strong> If Risk 50 is associated with Risk 10 and
+        Risk 100, the
+        numbers can be in either column and the
+        <em>database needs to check the entire table for both columns at the same time. This usually triggers a <strong>Full
+          Table Scan.</strong>
+        </em>
       </li>
-      <li><strong>The Result:</strong> This would have enabled a simple equality join, allowing Oracle to hit indexes
-        perfectly and scaling far beyond a million records.
+      <li><strong>With Ordering:</strong> If Risk 50 is associated with something lower (like 10), 50
+        must be in the second column.
+        If it is associated with something higher (like 100), 50 must be in the first column.
       </li>
     </ul>
+
+    <h3>The SQL</h3>
+    <p>Instead of one big messy <code>OR</code> query, We could use a <code>UNION ALL</code>. This tells th database to
+      perform two separate, lightning-fast <strong>Index Seeks</strong>.</p>
+    <app-card [title]="'Optimized State: Canonical (A < B)'">
+      <pre>
+-- This query is optimized for B-Tree Indexes
+SELECT * FROM (
+    -- 1. Look ONLY in the first column for 50.
+    -- Because of the rule, this finds all associations where the other ID is > 50.
+    SELECT * FROM Risk_Associations WHERE Risk_A_ID = 50
+
+    UNION ALL
+
+    -- 2. Look ONLY in the second column for 50.
+    -- Because of the rule, this finds all associations where the other ID is < 50.
+    SELECT * FROM Risk_Associations WHERE Risk_B_ID = 50
+) combined_results;
+    </pre>
+      <div class="status-badge good">Fast (Index Range Scan)</div>
+    </app-card>
+
+    <h3>The Improvement</h3>
+    <p>By moving the "sorting" logic to the <code>INSERT</code> statement (making sure <code>ID_1 < ID_2</code>), you
+      pay a tiny cost once during save to greatly reduce the cost when querying, turning an O(N) problem into O(logN).
+    </p>
   </section>
+
 
   <section class="insight-card">
     <app-card [icon]="ICONS.lightbulb" [title]="'Key Insight'">
-      <p>
-        <strong>Perspective brings clarity.</strong> The "Ugly" solution was a necessary patch for the moment, but the
+      <p>The "Ugly" solution was a necessary patch for the moment, but the
         true fix was an architectural rule: enforce canonical direction to turn an <code>OR</code> performance drain
         into a simple, indexable <code>EQUALS</code>.
       </p>
+
     </app-card>
   </section>
 
