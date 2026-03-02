@@ -1,10 +1,60 @@
 @use '../../tokens' as t;
 
 :host {
-  line-height: 2;
   margin: 0 t.$space-l;
 }
 
 a:hover {
   background-color: t.$ui-primary-50;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 0.5fr));
+  gap: t.$space-xl;
+  margin-top: t.$space-m;
+  margin-bottom: t.$space-xl;
+}
+
+.project-card {
+  text-decoration: none;
+  color: inherit;
+  background: white;
+  border: 2px solid t.$brand-plum;
+  border-radius: t.$radius-l;
+  padding: t.$space-l;
+  transition: transform 0.2s ease;
+
+  box-shadow: 12px 12px 0 t.$brand-plum;
+
+  &:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 16px 16px 0 t.$brand-orange;
+  }
+
+  h3 {
+    margin: 1rem 0;
+    font-size: 1.5rem;
+    color: t.$brand-plum;
+  }
+
+  .category {
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: t.$brand-pink;
+  }
+
+  .tags {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+
+    span {
+      background: #f0f0f0;
+      padding: 4px 8px;
+      font-size: 0.7rem;
+      border-radius: 4px;
+    }
+  }
 }

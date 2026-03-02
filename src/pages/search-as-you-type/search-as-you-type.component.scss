@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: row;
   flex: 1;
+  height: 100%;
   margin: 0 t.$space-xl;
 }
 
@@ -18,13 +19,12 @@ app-card {
   flex: 1;
   font-family: 'Courier New', Courier, monospace;
   font-size: 18pt;
-  margin-top: t.$space-l;
   max-width: 1000px;
 }
 
 #searchString {
   border: 2px solid t.$ui-accent-dark-75;
-  border-radius: t.$radius-l;
+  border-radius: t.$radius-m;
   color: t.$ui-accent-dark;
   font-family: 'Courier New', Courier, monospace;
   font-size: 18pt;
@@ -40,7 +40,7 @@ app-card {
     background-color: t.$ui-primary;
     border-radius: t.$radius-l;
     justify-content: center;
-    padding: 6px;
+    padding: t.$space-xs;
     margin: t.$space-m;
     min-width: 200px;
     text-align: center;

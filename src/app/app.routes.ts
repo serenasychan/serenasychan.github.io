@@ -6,7 +6,7 @@ import { CaseStudyAssociationsPageComponent } from '../pages/case-study-associat
 
 export const routes: Routes = [
   { path: '', component: TableOfContents },
-  { path: 'searchWords', component: SearchAsYouTypeComponent },
-  { path: 'selectAll', component: CaseStudySelectAllPageComponent },
+  { path: 'search-words', component: SearchAsYouTypeComponent },
+  { path: 'select-all', component: CaseStudySelectAllPageComponent },
   { path: 'associations', component: CaseStudyAssociationsPageComponent },
 ];

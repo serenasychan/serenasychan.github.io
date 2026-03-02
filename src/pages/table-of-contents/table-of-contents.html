@@ -1,10 +1,47 @@
-<h2>Case Studies</h2>
-<ul>
-  <!--  <li>Designing a Reusable Server-Side Grid Architecture in Angular</li>-->
-  <li><a href="./selectAll">The Hidden Complexity of "Select All" in Server-Side Grids</a></li>
-  <li><a href="./associations">The SQL Hidden Cost of Undirected Relationships</a></li>
-</ul>
-<h2>Examples</h2>
-<ul>
-  <li><a href="./searchWords">Search Words</a></li>
-</ul>
+<section class="gallery">
+  <h2 class="section-title">Case Studies</h2>
+  <div class="card-grid">
+    <a routerLink="select-all" class="project-card">
+      <div class="card-content">
+        <span class="category">Frontend & Architecture</span>
+        <h3>The Hidden Complexity of "Select All"</h3>
+        <p>Solving architectural coupling across filtering and selection in 1,000+ lines of AG Grid logic.</p>
+        <div class="tags">
+          <span>Angular</span><span>AG Grid</span><span>Strategy Pattern</span>
+        </div>
+      </div>
+    </a>
+
+    <a routerLink="/associations" class="project-card">
+      <div class="card-content">
+        <span class="category">Database & Performance</span>
+        <h3>The SQL Hidden Cost of Undirected Relationships</h3>
+        <p>How a canonical data model refactor turned an O(N) performance drain into an O(log N) success.</p>
+        <div class="tags">
+          <span>Oracle</span><span>NHibernate</span><span>Performance</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</section>
+<section>
+  <h2 class="section-title">Examples</h2>
+  <div class="card-grid">
+
+    <a routerLink="/search-words" class="project-card">
+      <div class="card-content">
+        <span class="category">Reactive Patterns & RxJS</span>
+        <h3>Search-as-you-type Architecture</h3>
+        <p>
+          Optimizing real-time API interactions using <code>switchMap</code> for request cancellation
+          and a custom <code>Map</code> cache for instant data retrieval.
+        </p>
+        <div class="tags">
+          <span>RxJS</span><span>Angular Signals</span><span>REST API</span><span>Performance</span>
+        </div>
+      </div>
+    </a>
+    
+  </div>
+</section>
