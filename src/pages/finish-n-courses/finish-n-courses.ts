@@ -3,7 +3,6 @@ import { CourseGraph, CoursePreReq } from './interfaces';
 import { CardComponent } from '../../components/card/card.component';
 import { FormsModule } from '@angular/forms';
 import { exampleCoursePreReqs, exampleCourses } from './inputs';
-import mermaid from 'mermaid';
 
 @Component({
   selector: 'app-finish-n-courses',
@@ -137,6 +136,8 @@ export class FinishNCourses {
     const container = document.getElementById('graph-container');
     if (!container) return;
 
+    const mermaid = (await import('mermaid')).default;
+    
     // 1. Build the Mermaid string
     let graphDefinition = 'graph LR\n';
 
@@ -145,8 +146,8 @@ export class FinishNCourses {
       graphDefinition += `  subgraph Term ${index + 1}\n`;
       graphDefinition += `  ${coursesInRank.join('\n  ')}\n`;
       graphDefinition += `end\n`;
-
     })
+
     preReqs.forEach(({ course, preReq }) => {
       graphDefinition += `  ${preReq} --> ${course}\n`;
     });
