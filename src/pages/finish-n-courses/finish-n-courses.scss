@@ -1,0 +1,94 @@
+@use '../../tokens' as t;
+
+:host {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  gap: t.$space-xl;
+  height: 100%;
+  margin: 0 t.$space-xl;
+}
+
+app-card {
+  max-width: 500px;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12pt;
+  gap: t.$space-xl;
+  max-width: 1000px;
+  padding: 0 t.$space-xl;
+
+  label {
+    margin-bottom: t.$space-xs;
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0 t.$space-xl t.$space-xl;
+  width: 200px;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: fit-content;
+  }
+}
+
+.input-container {
+  @extend .container;
+  gap: t.$space-l;
+
+  label {
+    font-weight: bold;
+  }
+
+  textarea {
+    field-sizing: content;
+  }
+}
+
+.result-container {
+  @extend .container;
+  flex: 1;
+
+  p {
+    margin-top: 0;
+  }
+}
+
+#checkButton {
+  background-color: t.$ui-accent;
+  border: none;
+  border-radius: t.$radius-l;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12pt;
+  padding: t.$space-s;
+  margin-top: t.$space-l;
+
+  &:hover {
+    background-color: t.$ui-primary;
+  }
+}
+
+#graph-container {
+  background: white;
+  border-radius: t.$radius-l;
+  margin: 0 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0;
+  width: 100%;
+
+  svg {
+    height: auto;
+    width: 100%;
+  }
+}

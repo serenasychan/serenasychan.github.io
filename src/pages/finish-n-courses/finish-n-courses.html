@@ -1,0 +1,45 @@
+<app-card title="Course Scheduler">
+  <h3>The Problem:</h3>
+  <p>Given a set of courses with prerequisites, can all courses be completed?</p>
+
+  <p>Course prerequisites form a directed graph, where if <em>course U is required to take course V</em> it is
+    represented as an
+    <em>edge from node U to node V</em>.</p>
+  <ul>
+    <li>If the graph contains a <strong>cycle</strong>, it's impossible to complete all courses because of a circular
+      dependency
+    </li>
+    <li>If the graph is a <strong>Directed Acyclic Graph (DAG)</strong> (no cycles), a valid course order exists</li>
+  </ul>
+
+  <h3>The Solution:</h3>
+  <p>We use <strong>Kahn's Algorithm</strong> which solves the problem by keeping track of <strong>in-degrees</strong>,
+    the number of prerequisites a course has. It identifies cycles (circular dependencies) and groups concurrent courses
+    into "Term Levels" for a structured academic roadmap.</p>
+
+</app-card>
+
+<div class="content">
+  <div class="input-container">
+
+    <div>
+      <label for="prerequisites">Pre-requisites:</label>
+      <textarea id="prerequisites" [(ngModel)]="coursePreReqsInput"></textarea>
+    </div>
+    <div>
+      <label for="courses">Courses:</label>
+      <textarea id="courses" [(ngModel)]="coursesInput"></textarea>
+      <button id="checkButton" (click)="runCheck()">Check if all courses can be completed</button>
+    </div>
+  </div>
+
+  <div class="result-container">
+    <div class="result__list">
+      @if (!initialView) {
+        <p>{{ canFinishAllCourses() ? "Yes" : "No" }}, the courses can be completed.</p>
+      }
+    </div>
+    <div id="graph-container"></div>
+
+  </div>
+</div>
