@@ -106,13 +106,15 @@ WHERE Risk_A_ID = 50
 -- This query is optimized for B-Tree Indexes
 SELECT * FROM (
     -- 1. Look ONLY in the first column for 50.
-    -- Because of the rule, this finds all associations where the other ID is > 50.
+    -- Because of the rule, this finds all associations
+    -- where the other ID is > 50.
     SELECT * FROM Risk_Associations WHERE Risk_A_ID = 50
 
     UNION ALL
 
     -- 2. Look ONLY in the second column for 50.
-    -- Because of the rule, this finds all associations where the other ID is < 50.
+    -- Because of the rule, this finds all associations
+    -- where the other ID is < 50.
     SELECT * FROM Risk_Associations WHERE Risk_B_ID = 50
 ) combined_results;
     </pre>

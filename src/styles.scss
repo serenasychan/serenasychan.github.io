@@ -17,8 +17,9 @@ pre {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   color: t.$white;
   margin: t.$space-l auto;
+  overflow-x: auto;
   padding: t.$space-l;
-  max-width: 400px;
+  max-width: 500px;
 }
 
 
