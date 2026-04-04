@@ -1,0 +1,74 @@
+<app-card title="Search Suggested Words">
+  <h3>The Requirements:</h3>
+  <p>
+    Build a search bar for suggested words. As the user types, call an API and display the results in a list.
+  </p>
+  <ul>
+    <li>Don't call the API on every single keystroke (wait 300ms).</li>
+    <li>If request A is sent, then request B is sent, but request A finishes after B, you must ignore
+      A so the UI doesn't show "stale" data.
+    </li>
+    <li>Display a "Loading..." state and a list of results.</li>
+  </ul>
+
+  @if (showReactCode()) {
+    <h3>
+      The Imperative React Solution:
+      <a
+        href="https://github.com/serenasychan/serenasychan.github.io/blob/source/src/pages/search-as-you-type/search-as-you-type-react.tsx"
+        target="_blank" rel="noopener noreferrer">[Link to Code]</a>
+    </h3>
+
+    <ul>
+      <li><b>Debounce:</b> <code>setTimeout</code> is used to manually handle debouncing, performing a search after the
+        user has <em>stopped typing</em> for at least 300 ms.
+      </li>
+      <li><b>Cancellation:</b> An <code>AbortController</code> cancels ongoing <code>fetch</code> requests and a local
+        <code>active</code> flag ensures only the most recent request updates the state. We also need to manually clean
+        up the timer with <code>clearTimeout</code>.
+      </li>
+      <li><b>State:</b> React uses <code>useState</code> for tracking search strings and results, and
+        <code>useMemo</code> to derive the component's visual state. The solution is <em>render-based</em> because every
+        stat change triggers a re-run of the entire function. More care is needed to reset <code>suggestions</code> to
+        <code>null</code> when a search starts to prevent showing a stale or empty state between changing the state from
+        loading and setting the results.
+      </li>
+      <li>An initial state requiring at least 3 characters before searching as well as loading, loaded, and empty
+        state.
+      </li>
+      <li>A custom caching layer for instant data retrieval.</li>
+    </ul>
+  } @else {
+    <h3>
+      The Declarative Angular Solution:
+      <a
+        href="https://github.com/serenasychan/serenasychan.github.io/blob/source/src/pages/search-as-you-type/search-as-you-type.component.ts"
+        target="_blank" rel="noopener noreferrer">[Link to Code]</a>
+    </h3>
+
+    <ul>
+      <li><b>Debounce:</b> <code>debounceTime(300)</code> limits API calls, performing a search after the user has <em>stopped
+        typing</em> for at least 300 ms.
+      </li>
+      <li><b>Cancellation:</b> <code>switchMap</code> allows automatic API request cancellation if a new search term
+        is entered, preventing <em>stale</em> data from being displayed.
+      </li>
+      <li><b>State:</b> Use of Angular Signals & Computed is <em>push-based</em>, which prevents showing a stale or
+        empty state between changing the state from loading and setting the results.
+      </li>
+      <li>An initial state requiring at least 3 characters before searching as well as loading, loaded, and empty
+        state.
+      </li>
+      <li>A custom caching layer for instant data retrieval.</li>
+    </ul>
+  }
+</app-card>
+
+<div class="content">
+  <app-toggle leftLabel="Angular" rightLabel="React" (isToggleOn)="toggleIsOn($event)"></app-toggle>
+  @if (showReactCode()) {
+    <search-widget></search-widget>
+  } @else {
+    <search-as-you-type-angular></search-as-you-type-angular>
+  }
+</div>

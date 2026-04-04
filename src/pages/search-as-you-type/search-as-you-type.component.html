@@ -1,74 +1,39 @@
-<app-card title="Search Suggested Words">
-  <h3>The Requirements:</h3>
-  <p>
-    Build a search bar for suggested words. As the user types, call an API and display the results in a list.
-  </p>
-  <ul>
-    <li>Don't call the API on every single keystroke (wait 300ms).</li>
-    <li>If request A is sent, then request B is sent, but request A finishes after B, you must ignore
-      A so the UI doesn't show "stale" data.
-    </li>
-    <li>Display a "Loading..." state and a list of results.</li>
-  </ul>
+<input
+  id="searchString"
+  type="text"
+  [(ngModel)]="searchString"
+  (ngModelChange)="onInputChange($event)"
+  placeholder="Search for words starting with..."
+>
 
-  <h3>The Solution:</h3>
-
-  This is an example of a reactive search component demonstrating advanced RxJS patterns.
-
-  <ul>
-    <li><code>debounce</code> allows waiting 300ms per request</li>
-    <li><code>switchMap</code> allows intelligent API request cancellation</li>
-    <li>An initial state requiring at least 3 characters before searching as well as loading, loaded, and empty
-      state.
-    </li>
-    <li>A custom caching layer for instant data retrieval.</li>
-    <li>Use of Angular Signals for optimized change detection.</li>
-  </ul>
-
-  The code can be found
-  <a href="https://github.com/serenasychan/serenasychan.github.io/tree/source/src/pages/search-as-you-type"
-     target="_blank" rel="noopener noreferrer">here</a>
-</app-card>
-
-<div class="content">
-  <label>
-    Search for words starting with:
-  </label>
-  <input
-    id="searchString"
-    type="text"
-    [(ngModel)]="searchString"
-    (ngModelChange)="onInputChange($event)"
-  >
-
-  @switch (state()) {
-    @case ('loading') {
-      <div class="noResults">
-        <fa-icon [icon]="ICONS.hourglass"></fa-icon>
-        Loading ...
-      </div>
-    }
-    @case ('initial') {
-      <div class="noResults">
-        <fa-icon [icon]="ICONS.alert"></fa-icon>
-        Please enter at least {{ MIN_SEARCH_LENGTH }} characters
-      </div>
-    }
-    @case ('empty') {
-      <div class="noResults">
-        No matches found.
-      </div>
-    }
-    @case ('loaded') {
-      <div class="results">
-        <ol>
-          @for (suggestion of suggestions(); track suggestion.word) {
-            <li>
-              {{ suggestion.word }}
-            </li>
-          }
-        </ol>
-      </div>
-    }
+@switch (state()) {
+  @case ('loading') {
+    <div class="noResults">
+      <fa-icon [icon]="ICONS.hourglass"></fa-icon>
+      Loading ...
+    </div>
   }
-</div>
+  @case ('initial') {
+    <div class="noResults">
+      <fa-icon [icon]="ICONS.alert"></fa-icon>
+      Please enter at least {{ MIN_SEARCH_LENGTH }} characters
+    </div>
+  }
+  @case ('empty') {
+    <div class="noResults">
+      <fa-icon [icon]="ICONS.search"></fa-icon>
+      No matches found.
+    </div>
+  }
+  @case ('loaded') {
+    <div class="results">
+      <ol>
+        @for (suggestion of suggestions(); track suggestion.word) {
+          <li>
+            {{ suggestion.word }}
+          </li>
+        }
+      </ol>
+    </div>
+  }
+}

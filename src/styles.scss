@@ -46,6 +46,10 @@ h1 {
 
 h2, h3 {
   color: t.$ui-accent-dark;
+
+  a {
+    color: t.$ui-primary;
+  }
 }
 
 li {

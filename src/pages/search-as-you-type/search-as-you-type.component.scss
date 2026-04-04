@@ -2,65 +2,61 @@
 
 :host {
   display: flex;
-  flex-direction: row;
-  flex: 1;
-  height: 100%;
-  margin: 0 t.$space-xl;
-}
-
-app-card {
-  max-width: 700px;
-}
-
-.content {
-  align-items: center;
-  display: flex;
   flex-direction: column;
   flex: 1;
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 18pt;
-  max-width: 1000px;
-}
 
-#searchString {
-  border: 2px solid t.$ui-accent-dark-75;
-  border-radius: t.$radius-m;
-  color: t.$ui-accent-dark;
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 18pt;
-  margin-top: t.$space-m;
-  padding: t.$space-s;
-  text-align: center;
-}
 
-.results {
-  line-height: 27pt;
-
-  li {
-    background-color: t.$ui-primary;
-    border-radius: t.$radius-l;
-    justify-content: center;
-    padding: t.$space-xs;
-    margin: t.$space-m;
-    min-width: 200px;
+  input {
+    border: 2px solid t.$ui-accent-dark-75;
+    border-radius: t.$radius-m;
+    color: t.$ui-accent-dark;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 18pt;
+    margin-top: t.$space-m;
+    padding: t.$space-s;
     text-align: center;
-    box-shadow: 9px 6px t.$ui-accent;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .results {
+    line-height: 27pt;
+
+    li {
+      animation: fadeIn 0.3s ease-in;
+      background-color: t.$ui-primary;
+      border-radius: t.$radius-l;
+      justify-content: center;
+      padding: t.$space-xs;
+      margin: t.$space-m;
+      min-width: 200px;
+      text-align: center;
+      box-shadow: 9px 6px t.$ui-accent;
+    }
+  }
+
+  .noResults {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto 0;
+    text-align: center;
+    max-width: 700px;
+
+    fa-icon {
+      font-size: 75px;
+      color: t.$ui-primary-75;
+      margin-bottom: t.$space-l;
+    }
   }
 }
-
-.noResults {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin: auto 0;
-  text-align: center;
-  width: 700px;
-
-  fa-icon {
-    font-size: 75px;
-    color: t.$ui-primary-75;
-    margin-bottom: t.$space-l;
-  }
-}
-

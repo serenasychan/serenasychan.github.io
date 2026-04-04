@@ -1,0 +1,33 @@
+@use '../../tokens' as t;
+
+:host {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  height: 100%;
+  margin: 0 t.$space-xl;
+}
+
+app-card {
+  max-width: 700px;
+}
+
+.content {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 18pt;
+  max-width: 1000px;
+
+  app-toggle {
+    margin-bottom: t.$space-s;
+  }
+}
+
+search-widget {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}

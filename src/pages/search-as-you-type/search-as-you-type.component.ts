@@ -5,17 +5,15 @@ import { HttpClient } from '@angular/common/http';
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { FormsModule } from "@angular/forms";
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
-import { faCircleInfo, faHourglass, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
-import { CardComponent } from '../../components/card/card.component';
+import { faCircleInfo, faHourglass, faSearch, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 
 type State = 'loading' | 'empty' | 'initial' | 'loaded';
 
 @Component({
-  selector: 'app-search-as-you-type',
+  selector: 'search-as-you-type-angular',
   imports: [
     FormsModule,
-    FaIconComponent,
-    CardComponent
+    FaIconComponent
   ],
   templateUrl: './search-as-you-type.component.html',
   styleUrl: './search-as-you-type.component.scss',
@@ -25,6 +23,7 @@ export class SearchAsYouTypeComponent {
     alert: faTriangleExclamation,
     hourglass: faHourglass,
     info: faCircleInfo,
+    search: faSearch,
   }
   MIN_SEARCH_LENGTH = 3;
 
