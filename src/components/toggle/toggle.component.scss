@@ -1,0 +1,65 @@
+@use '../../tokens' as t;
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  margin: 0 t.$space-m;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+
+  input {
+    // Hiding default checkbox
+    opacity: 0;
+    width: 0;
+    height: 0;
+
+    /* When the input is checked, change the sibling slider's background */
+    &:checked + .slider {
+      background-color: t.$ui-primary;
+    }
+
+    /* When the input is focused, change the sibling slider's border/glow */
+    &:focus + .slider {
+      outline: none;
+      border: 1px solid t.$ui-primary;
+      box-shadow: 0 0 0 4px t.$ui-primary-50;
+    }
+
+    /* Move the knob when checked */
+    &:checked + .slider:before {
+      transform: translateX(26px);
+    }
+  }
+}
+
+.slider {
+  background-color: t.$ui-accent;
+  border-radius: t.$radius-xl;
+  cursor: pointer;
+  inset: 0;
+  position: absolute;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: t.$space-xs;
+  bottom: t.$space-xs;
+  background-color: t.$white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+.label-left.selected {
+  background: t.$ui-accent-50;
+  font-weight: 600;
+}
+
+.label-right.selected {
+  background: t.$ui-primary-50;
+  font-weight: 600;
+}
