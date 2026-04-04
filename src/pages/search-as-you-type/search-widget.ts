@@ -1,9 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import {SearchAsYouTypeReactComponent} from './search-as-you-type-react';
-
 class SearchWidget extends HTMLElement {
-  private root: ReactDOM.Root | null = null;
+  private root: any = null;
 
   constructor() {
     super();
@@ -18,19 +14,13 @@ class SearchWidget extends HTMLElement {
       import('./search-as-you-type-react')
     ]);
 
-    this.root = ReactDOM.createRoot(this);
-    this.render();
+    this.root = createRoot(this);
+    this.root.render(React.createElement(SearchAsYouTypeReactComponent));
   }
 
   disconnectedCallback() {
     if (this.root) {
       this.root.unmount();
-    }
-  }
-
-  render() {
-    if (this.root) {
-      this.root.render(React.createElement(SearchAsYouTypeReactComponent));
     }
   }
 }
