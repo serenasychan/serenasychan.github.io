@@ -29,7 +29,7 @@
       </li>
       <li><b>State:</b> React uses <code>useState</code> for tracking search strings and results, and
         <code>useMemo</code> to derive the component's visual state. The solution is <em>render-based</em> because every
-        stat change triggers a re-run of the entire function. More care is needed to reset <code>suggestions</code> to
+        state change triggers a re-run of the entire function. More care is needed to reset <code>suggestions</code> to
         <code>null</code> when a search starts to prevent showing a stale or empty state between changing the state from
         loading and setting the results.
       </li>
@@ -37,12 +37,14 @@
         state.
       </li>
       <li>A custom caching layer for instant data retrieval.</li>
+      <li>The search component was created in React and embedded as a <em>web component</em> within this Angular app.
+        The code
+        can be found
+        <a
+          href="https://github.com/serenasychan/serenasychan.github.io/blob/source/src/pages/search-as-you-type/search-widget.ts"
+          target="_blank" rel="noopener noreferrer">here</a>.
+      </li>
     </ul>
-
-    In addition, the search component was created in React and embedded as a custom element within this Angular app. The code can be found
-    <a
-      href="https://github.com/serenasychan/serenasychan.github.io/blob/source/src/pages/search-as-you-type/search-widget.ts"
-      target="_blank" rel="noopener noreferrer">here</a>.
   } @else {
     <h3>
       The Declarative Angular Solution:

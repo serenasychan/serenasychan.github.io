@@ -10,7 +10,7 @@
   flex-direction: column;
 
   min-width: 400px;
-  padding: t.$space-m t.$space-l t.$space-l;
+  padding: t.$space-m 0 t.$space-l t.$space-l;
 
   fa-icon {
     color: t.$ui-primary;
@@ -26,5 +26,6 @@
   .text {
     line-height: 1.5;
     overflow-y: scroll;
+    padding-right: t.$space-l;
   }
 }

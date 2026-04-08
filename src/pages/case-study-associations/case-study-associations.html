@@ -79,8 +79,7 @@ WHERE Risk_A_ID = 50
     <p>
       With the benefit of perspective, I realized the issue wasn't just NHibernate, it was the <strong>data
       model</strong>. We should have enforced a rule where the lower Risk ID is always stored in the first column and
-      the
-      higher in the second.
+      the higher Risk ID in the second.
     </p>
 
     <h3>The "Why"</h3>
@@ -99,7 +98,7 @@ WHERE Risk_A_ID = 50
     </ul>
 
     <h3>The SQL</h3>
-    <p>Instead of one big messy <code>OR</code> query, We could use a <code>UNION ALL</code>. This tells th database to
+    <p>Instead of one big messy <code>OR</code> query, We could use a <code>UNION ALL</code>. This tells the database to
       perform two separate, lightning-fast <strong>Index Seeks</strong>.</p>
     <app-card [title]="'Optimized State: Canonical (A < B)'">
       <pre>

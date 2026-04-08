@@ -101,7 +101,7 @@ export const SearchAsYouTypeReactComponent = () => {
         placeholder="Search for words starting with..."
       />
 
-      {currentState === 'loaded' && (
+      {currentState === 'loaded' ? (
         <div className='results'>
           <ol>
             {suggestions?.map((s) => (
@@ -109,7 +109,7 @@ export const SearchAsYouTypeReactComponent = () => {
             ))}
           </ol>
         </div>
-      ) || (
+      ) : (
         <div className='noResults' aria-live="polite" role="status">
           <div className='fa-icon'>
             <FontAwesomeIcon icon={ICONS[currentState]} />

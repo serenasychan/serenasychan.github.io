@@ -94,8 +94,8 @@
         If a user individually deselects every row in the grid, the "Select All" header must show an empty state.
       </li>
       <li><b>Select All Minus One:</b>
-        When checks the "Select All" header but then deselects at least one row, the header must show an indeterminate
-        state.
+        When a user checks the "Select All" header but then deselects at least one row, the header must show an
+        indeterminate state.
       </li>
       <li><b>Cross-Page Memory:</b>
         Selection state should persist across page navigations, even as AG grid destroyed and recreated DOM nodes for
@@ -131,7 +131,7 @@
       component was the root cause, the need for clearer separation became obvious. This led to refactoring selection
       logic into strategy-based implementations and introducing explicit selection state.
     </p>
-    
+
     <p>
       I introduced an internal selection state independent of the grid. When users selected all rows, I retrieved the
       full result ID set from the backend so that downstream actions could operate deterministically.
@@ -150,10 +150,10 @@
   <section>
     <h2>Outcome</h2>
     <ul>
-      <li>reliable cross-page selection behavior</li>
-      <li>predictable backend bulk operations</li>
-      <li>improved reasoning around selection transitions</li>
-      <li>greater confidence through expanded test coverage</li>
+      <li>Reliable cross-page selection behavior</li>
+      <li>Predictable backend bulk operations</li>
+      <li>Improved reasoning around selection transitions</li>
+      <li>Greater confidence through expanded test coverage</li>
     </ul>
   </section>
 
