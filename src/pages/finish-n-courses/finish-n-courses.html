@@ -39,7 +39,8 @@
   <div class="result-container">
     <div class="result__list">
       @if (!initialView) {
-        <p>{{ canFinishAllCourses() ? "Yes" : "No" }}, the courses can be completed.</p>
+        <p>{{ canFinishAllCourses() ? "Yes" : "No" }}, the courses {{ canFinishAllCourses() ? "can" : "cannot" }} be
+          completed.</p>
       }
     </div>
     <div id="graph-container"></div>
