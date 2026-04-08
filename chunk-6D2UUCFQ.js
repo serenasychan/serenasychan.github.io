@@ -1,0 +1,69 @@
+import"./chunk-MI6ML535.js";var a=`:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+}
+
+input {
+  /* Using $ui-accent-dark-75 and $radius-m */
+  border: 2px solid rgba(163, 2, 98, 0.75);
+  border-radius: 8px;
+  /* Using $ui-accent-dark */
+  color: #A30262;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 18pt;
+  /* Using $space-m and $space-s */
+  margin-top: 1rem;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.results {
+  line-height: 27pt;
+}
+
+.results li {
+  animation: fadeIn 0.3s ease-in;
+  /* Using $ui-primary and $radius-l */
+  background-color: #FF9A56;
+  border-radius: 12px;
+  justify-content: center;
+  /* Using $space-xs, $space-m, and $ui-accent */
+  padding: 0.25rem;
+  margin: 1rem;
+  min-width: 200px;
+  text-align: center;
+  box-shadow: 9px 6px #D362A4;
+}
+
+.noResults .fa-icon {
+  font-size: 75px;
+  /* Using $ui-primary-75 and $space-l */
+  color: rgba(255, 154, 86, 0.75);
+  margin-bottom: 1.5rem;
+}
+
+.noResults {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto 0;
+  text-align: center;
+  max-width: 700px;
+}
+
+
+`;export{a as default};
