@@ -22,12 +22,11 @@ const ICONS: Record<string, IconDefinition> = {
 }
 
 export const SearchAsYouTypeReactComponent = () => {
-  // Derived state from Angular signals to React useState
   const [searchString, setSearchString] = React.useState('');
   const [suggestions, setSuggestions] = React.useState<string[] | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
 
-  // Replaced Angular computed with React useMemo
+  // Memoize current state to only update if there are changes
   const currentState: SearchState = React.useMemo(() => {
     if (searchString.length < MIN_SEARCH_LENGTH) return 'initial';
     if (isLoading) return 'loading';
@@ -93,8 +92,9 @@ export const SearchAsYouTypeReactComponent = () => {
   }, [searchString]);
 
   return (
-    <div className='search-container'>
+    <>
       <input
+        id="search-input"
         type="text"
         value={searchString}
         onChange={(e) => setSearchString(e.target.value)}
@@ -117,6 +117,6 @@ export const SearchAsYouTypeReactComponent = () => {
           {MESSAGES[currentState]}
         </div>
       )}
-    </div>
+    </>
   );
 }

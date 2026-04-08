@@ -14,7 +14,6 @@ import './search-widget';
   templateUrl: './search-as-you-type-page.component.html',
   styleUrls: [
     './search-as-you-type-page.component.scss',
-    './search-as-you-type-react.scss'
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

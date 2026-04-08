@@ -16,6 +16,9 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
+            "loader": {
+              ".css": "text"
+            },
             "outputPath": "dist/portfolio",
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",

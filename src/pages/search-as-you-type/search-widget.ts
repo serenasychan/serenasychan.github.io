@@ -1,20 +1,39 @@
+import type { Root } from 'react-dom/client';
+import { dom } from '@fortawesome/fontawesome-svg-core';
+
 class SearchWidget extends HTMLElement {
-  private root: any = null;
+  private root: Root | null = null;
+  private readonly shadow: ShadowRoot;
 
   constructor() {
     super();
-    this.root = null;
+
+    this.shadow = this.attachShadow({ mode: 'open' });
   }
 
   async connectedCallback() {
     // 1. Dynamically import React and the Component only when needed
-    const [React, { createRoot }, { SearchAsYouTypeReactComponent }] = await Promise.all([
+    const [React, { createRoot }, { SearchAsYouTypeReactComponent }, styles] = await Promise.all([
       import('react'),
       import('react-dom/client'),
-      import('./search-as-you-type-react')
+      import('./search-as-you-type-react'),
+      import('./search-as-you-type-react.css'),
     ]);
 
-    this.root = createRoot(this);
+    const styleSheet = new CSSStyleSheet();
+
+    const faStyles = dom.css();
+
+    if (typeof styles.default === 'string') {
+      const cssContent = `${faStyles}\n${styles.default}`;
+      styleSheet.replaceSync(cssContent);
+      this.shadow.adoptedStyleSheets = [styleSheet];
+    } else {
+      console.error('CSS failed to load as a string. Received:', styles.default);
+    }
+    if (!this.root) {
+      this.root = createRoot(this.shadow);
+    }
     this.root.render(React.createElement(SearchAsYouTypeReactComponent));
   }
 
@@ -25,7 +44,12 @@ class SearchWidget extends HTMLElement {
   }
 }
 
-// Define the custom element name
-if (!customElements.get('search-widget')) {
-  customElements.define('search-widget', SearchWidget);
+// Define the custom element name with explicit typing
+const tagName = 'search-widget';
+const existingConstructor: CustomElementConstructor | undefined = customElements.get(tagName);
+
+if (!existingConstructor) {
+  customElements.define(tagName, SearchWidget);
+} else {
+  console.warn(`${tagName} is already defined by ${existingConstructor.name}`);
 }
