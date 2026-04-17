@@ -1,8 +1,12 @@
 import React from 'react';
-import { SuggestedWord } from './suggested-word';
 import { faCircleInfo, faHourglass, faSearch, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconDefinition } from "@fortawesome/free-brands-svg-icons";
+
+export interface SuggestedWord {
+  word: string;
+  score: number;
+}
 
 const MIN_SEARCH_LENGTH = 3;
 const cache = new Map();

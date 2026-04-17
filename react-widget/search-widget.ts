@@ -1,5 +1,8 @@
-import type { Root } from 'react-dom/client';
+import React from 'react';
+import { createRoot, Root } from 'react-dom/client';
 import { dom } from '@fortawesome/fontawesome-svg-core';
+import { SearchAsYouTypeReactComponent } from './search-as-you-type-react';
+import styles from './search-as-you-type-react.css?inline';
 
 class SearchWidget extends HTMLElement {
   private root: Root | null = null;
@@ -9,28 +12,18 @@ class SearchWidget extends HTMLElement {
     super();
 
     this.shadow = this.attachShadow({ mode: 'open' });
+    this.setupStyles();
   }
 
-  async connectedCallback() {
-    // 1. Dynamically import React and the Component only when needed
-    const [React, { createRoot }, { SearchAsYouTypeReactComponent }, styles] = await Promise.all([
-      import('react'),
-      import('react-dom/client'),
-      import('./search-as-you-type-react'),
-      import('./search-as-you-type-react.css'),
-    ]);
-
+  private setupStyles() {
     const styleSheet = new CSSStyleSheet();
-
     const faStyles = dom.css();
+    // Combine FontAwesome and custom CSS into the Shadow DOM
+    styleSheet.replaceSync(`${faStyles}\n${styles}`);
+    this.shadow.adoptedStyleSheets = [styleSheet];
+  }
 
-    if (typeof styles.default === 'string') {
-      const cssContent = `${faStyles}\n${styles.default}`;
-      styleSheet.replaceSync(cssContent);
-      this.shadow.adoptedStyleSheets = [styleSheet];
-    } else {
-      console.error('CSS failed to load as a string. Received:', styles.default);
-    }
+  connectedCallback() {
     if (!this.root) {
       this.root = createRoot(this.shadow);
     }

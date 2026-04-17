@@ -3,11 +3,14 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "npm run build:widget && ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "buildDeploy": "ng build --base-href /; npx angular-cli-ghpages --dir=dist/portfolio/browser --branch=main"
+    "build:widget": "cd react-widget && npx vite build && cp dist/search-widget.iife.js ../src/assets/search-widget.js",
+    "build:prod": "npm run build:widget && ng build --configuration production --base-href /",
+    "deploy": "npx angular-cli-ghpages --dir=dist/portfolio/browser --branch=main",
+    "buildDeploy": "npm run build:prod && npm run deploy"
   },
   "prettier": {
     "printWidth": 100,
@@ -33,10 +36,7 @@
     "@fortawesome/angular-fontawesome": "^4.0.0",
     "@fortawesome/free-brands-svg-icons": "^7.2.0",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
-    "@fortawesome/react-fontawesome": "^3.3.0",
     "mermaid": "^11.12.3",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
@@ -46,8 +46,6 @@
     "@angular/compiler-cli": "^21.0.0",
     "@fortawesome/angular-fontawesome": "^4.0.0",
     "@types/jasmine": "^6.0.0",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
     "angular-cli-ghpages": "^3.0.2",
     "jasmine-core": "^6.1.0",
     "jsdom": "^27.1.0",
